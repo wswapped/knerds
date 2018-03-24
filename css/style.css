@@ -1,0 +1,22 @@
+#map {
+    height: 90vh;
+    width: 100%;
+   }
+/* Optional: Makes the sample page fill the window. */
+html, body {
+	height: 100%;
+	margin: 0;
+	padding: 0;
+}
+.sidebarContainer {
+    padding-top: 45px;
+}
+.waitLoad {
+    width: 100px;
+    height: 100px;
+}
+.loader-text {
+    font-size: 2em;
+    vertical-align: middle;
+    margin-top: 10%;
+}
