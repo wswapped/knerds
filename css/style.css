@@ -20,3 +20,7 @@ html, body {
     vertical-align: middle;
     margin-top: 10%;
 }
+.stopsList {
+    max-height: 60vh;
+    overflow-y: scroll;
+}

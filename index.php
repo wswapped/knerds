@@ -3,6 +3,9 @@
 	<title>Place go</title>
 	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" href="css/style.css">
+	<?php
+		include 'api.php';
+	?>
   <head>
   </head>
   <body>
@@ -23,6 +26,24 @@
 							</div>
 							<div class="col-xs-10">
 								<p class="display-4 loader-text">Getting location</p>
+							</div>
+							<div class="col-md-12">
+								<?php
+									$stops = getStops();
+									for($n=0; $n<count($stops); $n++){
+										$stop = $stops[$n];
+									}
+								?>
+								<ul class="list-group stopsList">
+									<?php
+										//getting the stops and printing
+										$stops = getStops();
+										for($n=0; $n<count($stops); $n++){
+											$stop = $stops[$n];
+											echo("<li class='list-group-item'>$stop[name]</li>");
+										}
+									?>
+								</ul>
 							</div>
 						</div>
 					</div>
@@ -50,6 +71,8 @@
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAAa1K0Q8xIXswQC7uCMrbvwYi2CcSTTiU=&callback=initMap">
     </script>
     <script type="text/javascript">
+    	var stops = <?php echo json_encode($stops); ?>
+
     	var x = document.getElementById("demo");
 		$(document).ready(function(){
 			getLocation();
