@@ -61,10 +61,18 @@
           zoom: 13,
           center: kigali
         });
-        var marker = new google.maps.Marker({
-          position: kigali,
-          map: map
-        });
+
+        //Marking the bus stops
+        for(n=0; n<stops.length; n++){
+        	stoplocation = stops[n]['geometry']["coordinates"];
+        	stopLatLong = {lat: stoplocation[1], lng: stoplocation[0]}
+        	var marker = new google.maps.Marker({
+	          position: stopLatLong,
+	          map: map
+	        });
+        }
+
+        
       }
     </script>
     <script async defer
