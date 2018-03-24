@@ -1,1 +1,2 @@
 # knerds
+CONNECT KIGALI kNERDS Team
