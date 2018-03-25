@@ -114,7 +114,23 @@
 			alert("Show position")
 
 			$(".cLocation").html("Latitude: " + position.coords.latitude + 
-		    "<br>Longitude: " + position.coords.longitude); 
+		    "<br>Longitude: " + position.coords.longitude);
+
+
+			meLatLng = {lat:position.coords.latitude, lng:position.coords.longitude}
+
+		    // map.marj
+		    var marker = new google.maps.Marker({
+	          position: meLatLng,
+	          label:'me',
+	          // icon:{
+	          // 	// url:'img/bus.png',
+	          // 	path: google.maps.SymbolPath.CIRCLE,
+	          // 	strokeColor: 'yellow',
+	          // 	scale:10
+	          // },
+	          map: map
+	        });
 		}
 </script>
   </body>
