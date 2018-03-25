@@ -21,11 +21,13 @@
 				<div class="sidebarContainer">
 					<div id="content">
 						<div class="row">
-							<div class="col-xs-2">
-								<img src="img/spinner.gif" class="waitLoad">
-							</div>
-							<div class="col-xs-10">
-								<p class="display-4 loader-text">Getting location</p>
+							<div class="cLocation">
+								<div class="col-xs-2">
+									<img src="img/spinner.gif" class="waitLoad">
+								</div>
+								<div class="col-xs-10">
+									<p class="display-4 loader-text">Getting location</p>
+								</div>
 							</div>
 							<div class="col-md-12">
 								<?php
@@ -102,8 +104,9 @@
 		}
 		function showPosition(position) {
 			alert("Show position")
-		    x.innerHTML = "Latitude: " + position.coords.latitude + 
-		    "<br>Longitude: " + position.coords.longitude; 
+
+			$(".cLocation").html("Latitude: " + position.coords.latitude + 
+		    "<br>Longitude: " + position.coords.longitude); 
 		}
 </script>
   </body>

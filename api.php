@@ -1,33 +1,27 @@
 <?php
 // header("Content-Type: application/json");
 # replace with your client information: developer.whereismytransport.com/clients
-$client_id="8e411440-0548-49ed-ab08-d82546a6fa7b";
-$client_secret="10SMVl6YGIYohIcJmUkukabN25VutFCTsY80mX4GFD4=";
+$client_id="0686037c-5c83-4905-ae09-1f396abe2fba";
+$client_secret="UnXYCsYrki/AE/Y0RMiOKtnkB20rrcwLHsJGkXr6uu4=";
 
-$request_vars = array("client_id"=>$client_id,
-    "client_secret"=>$client_secret,
-    "grant_type"=>"client_credentials",
-    "scope"=>"transportapi:all");
+//caching the token
+//we keeping token into a file
+$file = fopen('token.txt', 'rw+');
+$token_file = fread($file, filesize('token.txt'));
+$old_token = json_decode($token_file, true);
+$saved_time = $old_token['time'];
 
-$ch = curl_init();
-curl_setopt($ch, CURLOPT_POST, 1);
-curl_setopt($ch, CURLOPT_POSTFIELDS, $request_vars);
-curl_setopt($ch, CURLOPT_URL, 'https://identity.whereismytransport.com/connect/token');
+$interval = time() - $saved_time;
 
-curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-$token_object = json_decode(curl_exec($ch), true);
-$token = $token_object['access_token'];
+if($interval>3500){
+   //generate new token
+   $token = generateToken();
 
-// RESPONSE=$(curl\
-//     -H "Accept: application/json"\
-//     -d "client_id=$client_id"\
-//     -d "client_secret=$client_secret"\
-//     -d "grant_type=client_credentials"\
-//     -d "scope=transportapi:all"\
-//     https://identity.whereismytransport.com/connect/token)
-
-// TOKEN=$(echo $RESPONSE | python -c "import sys, json; print json.load(sys.stdin)['access_token']")
-// echo "Token: " $TOKEN
+   $file = fopen('token.txt', "w+");
+   fwrite($file, json_encode(array('token'=>$token, 'time'=>time())));
+}else{
+   $token = $old_token['token'];
+}
 
 function  getStops(){
    //getting stops
@@ -67,4 +61,20 @@ function callAPI($method, $url, $data){
    if(!$result){die("Connection Failure ".curl_error($curl));}
    curl_close($curl);
    return $result;
+}
+function generateToken(){
+   global $client_id, $client_secret;
+   $request_vars = array("client_id"=>$client_id,
+    "client_secret"=>$client_secret,
+    "grant_type"=>"client_credentials",
+    "scope"=>"transportapi:all");
+      $ch = curl_init();
+   curl_setopt($ch, CURLOPT_POST, 1);
+   curl_setopt($ch, CURLOPT_POSTFIELDS, $request_vars);
+   curl_setopt($ch, CURLOPT_URL, 'https://identity.whereismytransport.com/connect/token');
+
+   curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+   $token_object = json_decode(curl_exec($ch), true);
+   $token = $token_object['access_token'];
+   return $token;
 }
