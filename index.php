@@ -60,7 +60,7 @@
       function initMap() {
         var kigali = {lat: -1.9706, lng: 30.1044};
         var map = new google.maps.Map(document.getElementById('map'), {
-          zoom: 13,
+          zoom: 16,
           center: kigali
         });
 
@@ -70,6 +70,14 @@
         	stopLatLong = {lat: stoplocation[1], lng: stoplocation[0]}
         	var marker = new google.maps.Marker({
 	          position: stopLatLong,
+	          label:stops[n]['name'][0],
+	          label:parseInt(Math.random()*100).toString(),
+	          icon:{
+	          	// url:'img/bus.png',
+	          	path: google.maps.SymbolPath.CIRCLE,
+	          	strokeColor: 'red',
+	          	scale:10
+	          },
 	          map: map
 	        });
         }
